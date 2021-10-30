@@ -24,12 +24,15 @@ function App() {
 
 
   function addElementToList(elementName){
-    console.log('addelement is working', elementName)
-    const elementToAdd = {
-      name:elementName,
-      id:list.length+1
-    };
-    setList([...list,elementToAdd])
+    const index = list.findIndex(item=>item.name== elementName);
+    if (index === -1) {
+      console.log('addelement is working', elementName)
+      const elementToAdd = {
+        name:elementName,
+        id:list.length+1
+      };
+      setList([...list,elementToAdd])
+    }
   }
 
   function handleAddTags(id) {
