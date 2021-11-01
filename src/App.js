@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <InputField currentList={list} handleSubmit={addElementToList}/>
+      <InputField handleSubmit={addElementToList}/>
       { list.length>0 ? ( <CountriesList list={list} onSelect={id => handleAddTags(id)} />) : ''}
       {/* <CountriesList list={list} onSelect={id => handleAddTags(id)} /> */}
       <TagsList tags={tags} onDelete={id => handleDeleteTag(id)} />
