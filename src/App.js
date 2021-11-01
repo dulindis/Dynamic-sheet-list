@@ -24,9 +24,8 @@ function App() {
 
 
   function addElementToList(elementName){
-    const index = list.findIndex(item=>item.name== elementName);
+    const index = list.findIndex(item=>item.name === elementName);
     if (index === -1) {
-      console.log('addelement is working', elementName)
       const elementToAdd = {
         name:elementName,
         id:list.length+1
@@ -50,7 +49,8 @@ function App() {
   return (
     <div className="App">
       <InputField currentList={list} onClick={addElementToList}/>
-      <CountriesList list={list} onSelect={id => handleAddTags(id)} />
+      { list.length>0 ? ( <CountriesList list={list} onSelect={id => handleAddTags(id)} />) : ''}
+      {/* <CountriesList list={list} onSelect={id => handleAddTags(id)} /> */}
       <TagsList tags={tags} onDelete={id => handleDeleteTag(id)} />
     </div>
   );
