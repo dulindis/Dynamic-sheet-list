@@ -2,21 +2,7 @@ import React, { useState } from "react";
 import InputField from './input-field.component';
 import CountriesList from "./CountriesList";
 import TagsList from "./TagsList";
-
-// const list = [
-//   { id: 1, name: "Argentina" },
-//   { id: 2, name: "Bolivia" },
-//   { id: 3, name: "Brazil" },
-//   { id: 4, name: "Chile" },
-//   { id: 5, name: "Colombia" },
-//   { id: 6, name: "Ecuador" },
-//   { id: 7, name: "Guyana" },
-//   { id: 8, name: "Paraguay" },
-//   { id: 9, name: "Peru" },
-//   { id: 10, name: "Suriname" },
-//   { id: 11, name: "Uruguay" },
-//   { id: 12, name: "Venezuela" },
-// ];
+import Table from "./table.component";
 
 function App() {
   const [list,setList] = useState([])
@@ -52,6 +38,7 @@ function App() {
       { list.length>0 ? ( <CountriesList list={list} onSelect={id => handleAddTags(id)} />) : ''}
       {/* <CountriesList list={list} onSelect={id => handleAddTags(id)} /> */}
       <TagsList tags={tags} onDelete={id => handleDeleteTag(id)} />
+      <Table tags={tags} onDelete={id => handleDeleteTag(id)}/>
     </div>
   );
 }
