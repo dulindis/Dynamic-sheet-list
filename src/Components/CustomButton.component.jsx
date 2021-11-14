@@ -9,6 +9,9 @@ const CustomButton = ({type,children, ...otherProps}) => {
             case 'edit':
                 return baseClass.concat('is-success');
                 break;
+            case 'add':
+                return baseClass.concat('is-success');
+                break;
             case 'save':
                 return baseClass.concat('is-info');
                 break;
