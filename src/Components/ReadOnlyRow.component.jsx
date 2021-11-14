@@ -10,9 +10,6 @@ const ReadOnlyRow = ({tableItem, handleEditClick, handleDeleteTableChange}) => {
                 <td>
                     <CustomButton type='button' onClick={e=>handleEditClick(e,tableItem)}>Edit</CustomButton>
                     <CustomButton type='button' onClick={e=>handleDeleteTableChange(e,tableItem)}>Delete</CustomButton>
-
-                    {/* <button type='button' onClick={e=>handleEditClick(e,tableItem)}>Edit</button>
-                    <button type="button" onClick={e=>handleDeleteTableChange(e,tableItem)}>Delete</button> */}
                 </td>
               </tr>
     )

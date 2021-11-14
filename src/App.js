@@ -7,10 +7,10 @@ import CustomButton from "./Components/CustomButton.component";
 //   { name: "some item", id: 1 },
 //   { name: "some item2", id: 2 },
 // ];
+
 function App() {
   // const [tableList, setTableList] = useState(list);
   const [tableList, setTableList] = useState([]);
-
   const [addItem, setAddItem] = useState({name:''});
 
   const [editItemId, setEditItemId] = useState(null);
@@ -76,10 +76,8 @@ function App() {
     console.log(
       'from delete'
     );
-
     const newList = tableList.filter(listItem=> listItem.id !== item.id);
     setTableList(newList);
-    
   }
 
 
@@ -101,7 +99,6 @@ function App() {
             onChange={handleAddTableChange}
           />
           <CustomButton type="submit">submit</CustomButton>
-          {/* <button >add</button> */}
         </form>
       </div>
 
@@ -125,7 +122,6 @@ function App() {
             <tbody>
               {tableList.map((tableItem) => (
                 <Fragment>
-                  {/* <EditableRow id={tableItem.id}/> */}
                   {editItemId === tableItem.id ? (
                     <EditableRow
                       key={tableItem.id}

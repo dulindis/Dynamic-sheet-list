@@ -6,7 +6,6 @@ const EditableRow = ({id, editTableItemData, handleEditTableChange,handleCancelC
     return (
              <tr>
                  <td>{id}</td>
-
                  <td>
                     <input 
                         className="input"
@@ -20,14 +19,6 @@ const EditableRow = ({id, editTableItemData, handleEditTableChange,handleCancelC
                  <td>
                  <CustomButton type="submit">Save</CustomButton>
                  <CustomButton type='button' onClick={handleCancelClick}>Cancel</CustomButton>
-
-                 {/* <button type="submit">Save</button>
-                 <button type='button' onClick={handleCancelClick}>Cancel</button> */}
-                {/* <button type="button" 
-                // onClick={handleCancelClick}
-                >
-                Cancel
-                </button> */}
                  </td>
               </tr>
     )
