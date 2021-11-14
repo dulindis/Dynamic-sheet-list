@@ -1,13 +1,16 @@
 import React, { useState, Fragment } from "react";
 import ReadOnlyRow from "./Components/ReadOnlyRow.component";
 import EditableRow from "./Components/EditableRow.component";
+import CustomButton from "./Components/CustomButton.component";
 
-const list = [
-  { name: "some item", id: 1 },
-  { name: "some item2", id: 2 },
-];
+// const list = [
+//   { name: "some item", id: 1 },
+//   { name: "some item2", id: 2 },
+// ];
 function App() {
-  const [tableList, setTableList] = useState(list);
+  // const [tableList, setTableList] = useState(list);
+  const [tableList, setTableList] = useState([]);
+
   const [addItem, setAddItem] = useState({name:''});
 
   const [editItemId, setEditItemId] = useState(null);
@@ -86,7 +89,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="input-adding-section">
+      <div style={{width:'30%'}} className="input-adding-section is-one-third">
         <h2>Add an item:</h2>
         <form  onSubmit={handleAddTableSubmit}>
           <input
@@ -97,7 +100,8 @@ function App() {
             value={addItem.name}
             onChange={handleAddTableChange}
           />
-          <button type="submit">add</button>
+          <CustomButton type="submit">submit</CustomButton>
+          {/* <button >add</button> */}
         </form>
       </div>
 
