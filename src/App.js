@@ -1,27 +1,23 @@
-import React, { useState, Fragment } from "react";
-import ReadOnlyRow from "./Components/ReadOnlyRow.component";
-import EditableRow from "./Components/EditableRow.component";
+import React, { useState } from "react";
+import Row from "./Components/Row.component";
 import CustomButton from "./Components/CustomButton.component";
-
-// const list = [
-//   { name: "some item", id: 1 },
-//   { name: "some item2", id: 2 },
-// ];
+import Input from './Components/Input.component';
 
 function App() {
-  // const [tableList, setTableList] = useState(list);
+
+  //state
   const [tableList, setTableList] = useState([]);
+
   const [addItem, setAddItem] = useState({name:''});
 
   const [editItemId, setEditItemId] = useState(null);
   const [editTableItemData, setEditTableItemData] = useState({});
 
+
   // ADDING - input change and formsubmit
   const handleAddTableChange = (e) => {
     e.preventDefault();
-    const item = {
-      name: e.target.value,
-    };
+    const item = {name: e.target.value};
     setAddItem(item);
   };
 
@@ -33,56 +29,82 @@ function App() {
       const newItem = {
         id: tableList.length + 1,
         name: addItem.name,
+        editMode:false
       };
       const newList = [...tableList, newItem];
       setTableList(newList);
       setAddItem({name:''});
-
+    } else {
+      alert('The item already exists on the list. Please write another item.')
     }
   };
 
   // EDITING - button-click, input change and formsubmit
 
   const handleEditClick = (e, item) => {
+    resetEdit();
     e.preventDefault();
     setEditItemId(item.id);
-    setEditTableItemData(item);
+
+    const searchedElement = tableList.find(tableItem => tableItem.id===item.id);
+    const editedItem = {...searchedElement,
+        editMode:true,
+    };
+    setEditTableItemData(editedItem);
+
+    const searchedElementIndex = tableList.findIndex(tableItem => tableItem.id===item.id);
+
+    const updatedList = [...tableList];
+    updatedList[searchedElementIndex] = editedItem
+    setTableList(updatedList);
+
+
   };
 
   const handleEditTableChange = (e) => {
     e.preventDefault();
+
     const updatedItem = {...editTableItemData};
     updatedItem['name'] = e.target.value;
+
     setEditTableItemData(updatedItem);
   };
 
   const handleEditTableSubmit = (e) => {
     e.preventDefault();
-    
-    // const updatedItem = {
-    //   id: editItemId,
-    //   name: editTableItemData.name
-    // };
-    const newTableList = [...tableList];
-
     const index = tableList.findIndex(tableItem=>tableItem.id === editItemId);
-    newTableList[index] = editTableItemData;
+    const updatedItem = 
+    {...editTableItemData, 
+      editMode:false
+    };
+    const newTableList = [...tableList];
+    newTableList[index] = updatedItem;
     setTableList(newTableList);
     setEditItemId(null);
+    setEditTableItemData({})
   }
 
   const handleDeleteTableChange = (e,item) => {
     e.preventDefault();
-    console.log(
-      'from delete'
-    );
     const newList = tableList.filter(listItem=> listItem.id !== item.id);
     setTableList(newList);
   }
 
+  const resetEdit = () => {
+    const indexOfActiveEditModeElement = tableList.findIndex(tableItem=> tableItem.editMode===true);
+    if (indexOfActiveEditModeElement!== -1) {
+      const currentlyActiveElement = tableList[indexOfActiveEditModeElement];
+      currentlyActiveElement.editMode=false;
+      const updatedList = [...tableList];
+      updatedList[indexOfActiveEditModeElement] = currentlyActiveElement
+      setTableList(updatedList);
+    }
+  }
 
   const handleCancelClick = () => {
+    resetEdit();
     setEditItemId(null);
+    setEditTableItemData({})
   };
 
   return (
@@ -90,7 +112,7 @@ function App() {
       <div style={{width:'30%'}} className="input-adding-section is-one-third">
         <h2>Add an item:</h2>
         <form  onSubmit={handleAddTableSubmit}>
-          <input
+          <Input 
             className="input"
             name="name"
             type="text"
@@ -103,6 +125,7 @@ function App() {
       </div>
 
       <div className="table-display-section">
+      {/* handleadTableSubmit  bylo wczesniej*/}
         <form onSubmit={handleEditTableSubmit}>
           <table className="table is-hoverable">
             <thead>
@@ -121,25 +144,19 @@ function App() {
 
             <tbody>
               {tableList.map((tableItem) => (
-                <Fragment>
-                  {editItemId === tableItem.id ? (
-                    <EditableRow
-                      key={tableItem.id}
-                      id={tableItem.id}
-                      editTableItemData={editTableItemData}
-                      handleEditTableChange={handleEditTableChange}
-                      handleCancelClick={handleCancelClick}
-                    />
-                  ) : (
-                    <ReadOnlyRow
-                      key={tableItem.id}
-                      tableItem={tableItem}
-                      handleEditClick={handleEditClick}
-                      handleDeleteTableChange={handleDeleteTableChange}
-                    />
-                  )}
-                </Fragment>
-              ))}
+                <tr>
+                       <Row
+                        key={tableItem.id}
+                        tableItem={tableItem}
+                        value={editTableItemData}
+                        handleCancelClick={handleCancelClick}
+                        handleEditClick={handleEditClick}
+                        handleDeleteTableChange={handleDeleteTableChange}
+                        onChange={handleEditTableChange}
+                        />
+                </tr>
+                ))
+              }
             </tbody>
           </table>
         </form>
