@@ -14,6 +14,30 @@ function App() {
   const [editTableItemData, setEditTableItemData] = useState({});
 
 
+  //generate proper id
+
+  const idGenerator =(() => {
+    let idVal =0;
+
+
+    const existingIdValues = tableList.map(tableItem => tableItem.id).sort((a,b)=> a-b);
+    const existingIdValuesMaxVal =Math.max.apply(Math, existingIdValues);
+    // Math.max(existingIdValues);
+
+    console.log('existingIdValues',existingIdValues);
+    console.log('existingIdValuesMaxVal',existingIdValuesMaxVal);
+
+    if (existingIdValues.length !== existingIdValuesMaxVal) {
+      idVal = existingIdValuesMaxVal+1
+    }
+    else {
+      idVal = existingIdValues.length+1;
+    }
+    return function (){
+      return idVal ;
+    }
+  })()
+
   // ADDING - input change and formsubmit
   const handleAddTableChange = (e) => {
     e.preventDefault();
@@ -25,9 +49,11 @@ function App() {
     e.preventDefault();
 
     const index = tableList.findIndex(tableItem=>tableItem.name === addItem.name);
+
     if (index === -1) {
       const newItem = {
-        id: tableList.length + 1,
+        // id: tableList.length + 1,
+        id: idGenerator(),
         name: addItem.name,
         editMode:false
       };
