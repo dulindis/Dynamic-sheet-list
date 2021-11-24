@@ -48,6 +48,10 @@ function App() {
 
     const index = tableList.findIndex(tableItem=>tableItem.name === addItem.name);
 
+    if (!addItem.name) {
+      alert('Please write a name of an item to add.');
+      return
+    }
     if (index === -1) {
       const newId=idGenerator()
       const newItem = {
