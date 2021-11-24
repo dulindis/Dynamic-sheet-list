@@ -92,13 +92,16 @@ function App() {
 
     const updatedItem = {...editTableItemData};
     updatedItem['name'] = e.target.value;
-
     setEditTableItemData(updatedItem);
   };
 
   const handleEditTableSubmit = (e) => {
     e.preventDefault();
     const index = tableList.findIndex(tableItem=>tableItem.id === editItemId);
+    if (!editTableItemData['name']){
+      alert('edited input cannot stay empty');
+      return
+    }
     const updatedItem = 
     {...editTableItemData, 
       editMode:false
