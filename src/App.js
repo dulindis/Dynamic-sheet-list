@@ -14,29 +14,27 @@ function App() {
   const [editTableItemData, setEditTableItemData] = useState({});
 
 
-  //generate proper id
-
+  //generate proper unique id
   const idGenerator =(() => {
     let idVal =0;
 
-
     const existingIdValues = tableList.map(tableItem => tableItem.id).sort((a,b)=> a-b);
     const existingIdValuesMaxVal =Math.max.apply(Math, existingIdValues);
-    // Math.max(existingIdValues);
 
-    console.log('existingIdValues',existingIdValues);
-    console.log('existingIdValuesMaxVal',existingIdValuesMaxVal);
-
-    if (existingIdValues.length !== existingIdValuesMaxVal) {
+    if (existingIdValues.length === 0) {
+      idVal = 1
+    } else if (existingIdValues.length !== existingIdValuesMaxVal) {
       idVal = existingIdValuesMaxVal+1
     }
     else {
       idVal = existingIdValues.length+1;
     }
     return function (){
+      console.log(idVal,'idval')
       return idVal ;
     }
   })()
+  
 
   // ADDING - input change and formsubmit
   const handleAddTableChange = (e) => {
@@ -51,9 +49,9 @@ function App() {
     const index = tableList.findIndex(tableItem=>tableItem.name === addItem.name);
 
     if (index === -1) {
+      const newId=idGenerator()
       const newItem = {
-        // id: tableList.length + 1,
-        id: idGenerator(),
+        id: newId,
         name: addItem.name,
         editMode:false
       };
@@ -83,8 +81,6 @@ function App() {
     const updatedList = [...tableList];
     updatedList[searchedElementIndex] = editedItem
     setTableList(updatedList);
-
-
   };
 
   const handleEditTableChange = (e) => {
@@ -133,15 +129,19 @@ function App() {
     setEditTableItemData({})
   };
 
+
+  // const formSubmit = (e) => {
+  //   e.preventDefault();
+  //   const updatedList = [...testList, testInput];
+  //   setTestList(updatedList);
+  // }
+
   return (
     <div className="App">
       <div style={{width:'30%'}} className="input-adding-section is-one-third">
         <h2>Add an item:</h2>
-        <form  onSubmit={handleAddTableSubmit}>
+        <form  onSubmit={e=>handleAddTableSubmit(e)}>
           <Input 
-            className="input"
-            name="name"
-            type="text"
             placeholder="Item to add to the list."
             value={addItem.name}
             onChange={handleAddTableChange}
@@ -188,6 +188,7 @@ function App() {
         </form>
       </div>
     </div>
+
   );
 }
 

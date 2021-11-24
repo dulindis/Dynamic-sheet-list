@@ -1,6 +1,9 @@
 import React from 'react';
 
-const Input = ({onChange,value}) => {
+const Input = ({onChange,value, placeholder = 'write your input'}) => {
+
+
+    
     return (
         <div className="field">
             {/* <label className="label">Item</label> */}
@@ -9,7 +12,7 @@ const Input = ({onChange,value}) => {
                 name="name"
                 type="text"
                 value={value}
-                placeholder="Item to add to the list."
+                placeholder={placeholder}
                 onChange={e=>onChange(e)}
             />
         </div>

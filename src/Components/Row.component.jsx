@@ -3,13 +3,14 @@ import Input from './Input.component';
 import CustomButton from './CustomButton.component';
 
 
-const Row = ({tableItem,value,handleCancelClick,handleEditClick,handleDeleteTableChange, onChange}) => {
+const Row = ({tableItem,value, placeholder, handleCancelClick,handleEditClick,handleDeleteTableChange, onChange}) => {
+    console.log(tableItem)
     return (
         <Fragment>
             <td>{tableItem.id}</td>
             <td>
                 {(tableItem.editMode)?
-                    <Input value={value.name} onChange={onChange}/> 
+                    <Input value={value.name} onChange={onChange} placeholder='edit the content'/> 
                     : <td>{tableItem.name}</td>
                 }
             </td>
